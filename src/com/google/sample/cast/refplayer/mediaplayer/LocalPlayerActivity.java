@@ -66,6 +66,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -102,7 +103,7 @@ public class LocalPlayerActivity extends AppCompatActivity {
     private CastSession mCastSession;
     private SessionManagerListener<CastSession> mSessionManagerListener;
     private MenuItem mediaRouteMenuItem;
-
+    private String video = "http://drod02s-vh.akamaihd.net/i/all/clear/streaming/8a/589d76d36187a4016ce7be8a/Gift-ved-foerste-blik---IV--2-_5cd7882df03646d0a96dcafe94d7e76b_,1125,562,2398,362,.mp4.csmil/master.m3u8?cc1=name=Dansk~default=no~forced=no~lang=da~uri=http://www.dr.dk/mu-online/api/1.3/subtitles/playlist/urn:dr:mu:manifest:589d76d36187a4016ce7be8a%3Fsegmentsizeinms=60000%26subtitleType=HardOfHearing";
     /**
      * indicates whether we are doing a local or a remote playback
      */
@@ -136,7 +137,10 @@ public class LocalPlayerActivity extends AppCompatActivity {
             setupActionBar();
             boolean shouldStartPlayback = bundle.getBoolean("shouldStart");
             int startPosition = bundle.getInt("startPosition", 0);
-            mVideoView.setVideoURI(Uri.parse(mSelectedMedia.getUrl()));
+
+            //mVideoView.setVideoURI(Uri.parse(mSelectedMedia.getUrl()));
+            mVideoView.setVideoURI(Uri.parse(video));
+            Log.d(TAG, "Setting url of the VideoView to: " + video.toString());
             Log.d(TAG, "Setting url of the VideoView to: " + mSelectedMedia.getUrl());
             if (shouldStartPlayback) {
                 // this will be the case only if we are coming from the
@@ -302,7 +306,7 @@ public class LocalPlayerActivity extends AppCompatActivity {
             case IDLE:
                 switch (mLocation) {
                     case LOCAL:
-                        mVideoView.setVideoURI(Uri.parse(mSelectedMedia.getUrl()));
+                        mVideoView.setVideoURI(Uri.parse(video));
                         mVideoView.seekTo(0);
                         mVideoView.start();
                         mPlaybackState = PlaybackState.PLAYING;
